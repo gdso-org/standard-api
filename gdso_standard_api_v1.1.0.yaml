@@ -1,21 +1,21 @@
 swagger: '2.0'
 info:
   description: This is the description of the Standard API
-  version: 1.0.0
+  version: 1.1.0
   title: GDSO standard API
-  termsOfService: 'http://swagger.io/terms/'
+  termsOfService: https://gdso.org/getattachment/Members-description/Technical-documentation/Section/Terms-of-Use/GDSO-GeneralTermsofUse_Production_FEB2023-(1).pdf?lang=en-US
   contact:
     email: info@gdso.org
   license:
     name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
 basePath: /v1
 tags:
   - name: tire
     description: Everything about your Tire
     externalDocs:
       description: Find out more
-      url: 'http://swagger.io'
+      url: https://gdso-org.github.io/tech-doc/
 schemes:
   - http
 securityDefinitions:
@@ -26,14 +26,15 @@ securityDefinitions:
     tokenUrl: https://example.com/oauth/token
     scopes:
       read: Grants read access
-paths: 
+paths:
   /tire/{sgtin}:
     get:
       tags:
         - tire
       summary: get tire information from a sgtin96 tag
       security:
-        - OAuth2: [read]      
+        - OAuth2:
+            - read
       description: Returns product information related to this individual tire. This operation requires authentication.
       operationId: getTireBySgtin
       consumes:
@@ -63,9 +64,9 @@ paths:
           description: Tire not found / Invalid sgtin supplied
 definitions:
   Labelling:
-    description: Labelling  
+    description: Labelling
     type: array
-    items: 
+    items:
       type: object
       properties:
         noisePerformance:
@@ -86,31 +87,29 @@ definitions:
           example: C
         labellingReferenceRegulation:
           type: string
-          description: >-
-            Regulation to which the labelling level of the tire for wet, noise and
-            rolling resistance is given.
+          description: Regulation to which the labelling level of the tire for wet, noise and rolling resistance is given.
           example: EUR DIR 1222/2009
         eprelRecordReferenceUrl:
           type: string
           description: URL to the EPREL record of the tire
-          example: "https://www.eprel.com/reference/123456"
+          example: https://www.eprel.com/reference/123456
         labelPictureUrl:
           type: string
           description: URL to the label picture
-          example: "https://www.michelin.com/label/product/123456"
+          example: https://www.michelin.com/label/product/123456
   ItemIDS:
-    description: various Item/article IDs  
+    description: various Item/article IDs
     properties:
       eanCode:
         type: string
         description: European Article number according to GS1 standard
-        example: "3528709789509"
+        example: '3528709789509'
       upcCode:
         type: string
         description: (Private) Universal Product code according to GS1 standard
-        example: "00412345678"
+        example: '00412345678'
   Dimensions:
-    description: dimensions of the tire  
+    description: dimensions of the tire
     properties:
       geometricalTyreSize:
         type: string
@@ -141,7 +140,7 @@ definitions:
           value:
             type: number
             description: Rim diameter
-            example: 17.00
+            example: 17
           uom:
             type: string
             description: unit of measure for the rim diameter
@@ -202,10 +201,6 @@ definitions:
         type: boolean
         description: It indicates if the tire as a specific mounting sens (OUTSIDE marking)
         example: false
-      retreadable:
-        type: boolean
-        description: It indicates that the tyre can be retreaded
-        example: false
       runFlat:
         type: string
         description: It indicates the capability of the tire to run without pressure
@@ -214,8 +209,16 @@ definitions:
         type: boolean
         description: It indicates the fact that the tire is equipped with a puncture sealant
         example: true
+      maxLoadCarryingCapacity:
+        type: integer
+        description: (Private) Load capacity (kg) per axle at max inflation pressure (kPa) and at the specified speed
+        example: 1200
+      hlpc:
+        type: boolean
+        description: Indicates if the tire meets the UN R.30 definition of High Load (HL), values according to ETRTO standard
+        example: true
   Markings:
-    description: 'different markings of the tire (M+S, POR ...)'
+    description: different markings of the tire (M+S, POR ...)
     properties:
       mudAndSnow:
         type: boolean
@@ -223,9 +226,7 @@ definitions:
         example: true
       3pmsf:
         type: boolean
-        description: >-
-          3PMSF marking to indicate if the tire is designed for use in severe
-          snow conditions
+        description: 3PMSF marking to indicate if the tire is designed for use in severe snow conditions
         example: true
       iceGrip:
         type: boolean
@@ -233,15 +234,11 @@ definitions:
         example: true
       tractionTire:
         type: boolean
-        description: >-
-          Traction regulatory marking (UNECE R117) Tires primarly designed for the drive
-          axle to maximise torque transmission in various circumstances
+        description: Traction regulatory marking (UNECE R117) Tires primarly designed for the drive axle to maximise torque transmission in various circumstances
         example: true
       freeRollingTire:
         type: boolean
-        description: >-
-          FRT marking Tire designed for equipment of trailer axles, axles of
-          motor vehicles other than front steering and drive axles.
+        description: FRT marking Tire designed for equipment of trailer axles, axles of motor vehicles other than front steering and drive axles.
         example: true
       professionnalOfRoad:
         type: boolean
@@ -249,17 +246,14 @@ definitions:
         example: true
       sizeSuffix:
         type: string
-        description: >-
-          Part of identification marking of the tire (see G9 ETRTO Std Manual T = temporary, P = Passenger for TRA std, LT = light truck (alternative to C Marking of R54)
+        description: Part of identification marking of the tire (see G9 ETRTO Std Manual T = temporary, P = Passenger for TRA std, LT = light truck (alternative to C Marking of R54)
         enum:
           - C
           - CP
         example: CP
       sizePrefix:
         type: string
-        description: >-
-          Part of identification marking of tire (see G9 ETRTO Std Manual T =
-          temporary, P ou LT)
+        description: Part of identification marking of tire (see G9 ETRTO Std Manual T = temporary, P ou LT)
         enum:
           - T
           - P
@@ -276,8 +270,12 @@ definitions:
               example: Mercedes
             tireMarking:
               type: string
-              description: Specific original equipment marking           
+              description: Specific original equipment marking
               example: MO
+      maxInflationPressure:
+        type: integer
+        description: (Private) Max tyre inflation pressure in kPa
+        example: 530
   NationalRegulationsCompliances:
     description: (Private) Compliance information to national regulations
     type: array
@@ -289,7 +287,7 @@ definitions:
           description: Regulation name or marking
           example: CCC
   Weight:
-    description: (Private) weight of the tire  
+    description: (Private) weight of the tire
     properties:
       value:
         type: number
@@ -301,15 +299,56 @@ definitions:
         enum:
           - KILOGRAM
         example: KILOGRAM
+  VectoCoefficient:
+    description: (Private) DECLARED COEFFICIENT VALUE (N/kN) according to EU 2017/2400 Regulation
+    properties:
+      value:
+        type: number
+        description: coefficient value
+        example: 7.0
+      uom:
+        type: string
+        description: unit of measure for coefficient
+        enum:
+          - N/kN
+        example: N/kN
+  WltpCoefficient:
+    description: (Private) Aligned COEFFICIENT VALUE (N/kN) according to EU 2017/1151 Regulation
+    properties:
+      value:
+        type: number
+        description: WLTP Tyre Rolling coefficient value
+        example: 5.6
+      uom:
+        type: string
+        description: unit of measure for WLTP coefficient
+        enum:
+          - kg/T
+        example: kg/T
+  TyreRollingCircumference:
+    description: (Private) Theoretical Tyre Rolling Circumference - Calculated according to ETRTO for PC and CV tyres (TRA for LT) and reported in mm
+    properties:
+      value:
+        type: number
+        description: Circumference value
+        example: 1720
+      uom:
+        type: string
+        description: unit of measure for circumference value
+        enum:
+          - MILLIMETER
+        example: MILLIMETER
   Tire:
     properties:
+      uii:
+        type: string
+        description: (Private) Unique Item Identifier - SGTIN-96 following Pure identity EPC URN (GS1 EPCIS) format
+        example : "urn:epc:id:sgtin:12345678.04444.2222222"
       product:
         $ref: '#/definitions/Product'
       dotTin:
         type: object
-        description: >-
-          (Private) Tire Identification Number (consisting of Plant Code, Size Code and
-          Type Code) (US Market )
+        description: (Private) Tire Identification Number (consisting of Plant Code, Size Code and Type Code) (US Market )
         properties:
           factoryCode:
             type: string
@@ -326,7 +365,7 @@ definitions:
           weekYear:
             type: string
             description: tire production week
-            example: "1020"
+            example: '1020'
       countryOfOrigin:
         type: string
         description: (Private) ISO code on 3 characters that indicates the tire's country of origin
@@ -339,6 +378,28 @@ definitions:
         $ref: '#/definitions/NationalRegulationsCompliances'
       weight:
         $ref: '#/definitions/Weight'
+      vectoTyreRollingResistance:
+        $ref: '#/definitions/VectoCoefficient'
+      vectoCertificateNumber:
+        type: string
+        description: (Private) Certificate number according to EU 2017/2400 Regulation format in ASCII
+        example: e4*2017/2400*2022/1379*T*01002*00
+      rollingCircumference:
+        $ref: '#/definitions/TyreRollingCircumference'
+      wltpTyreRollingResistance:
+        $ref: '#/definitions/WltpCoefficient'
+      developmentIdentifier:
+        type: string
+        description: (Private) Specification/Identification used during tyre developement. Alpha numeric code used by the Stakeholders if applicable in ASCII
+        example: A1234568A
+      customerPartNumber:
+        type: string
+        description: (Private) Internal reference for customer Prototype / Series. Alpha numeric code used by the OEM if applicable in ASCII
+        example: X1Y2-Z
+      oemSubmissionIdentifier:
+        type: string
+        description: (Private) Id provided by the OEM for specific technical requirements submittal during the vehicle / tyre development cycles, so that variants for the same specification can be distinguished by them.
+        example: A1B2C3...
     xml:
       name: Tire
   Product:
@@ -365,9 +426,7 @@ definitions:
         $ref: '#/definitions/Markings'
       productType:
         type: string
-        description: >-
-          Marketing appreciation of the targeted product usage based on
-          manufacturer classification based on PRICAT standard
+        description: Marketing appreciation of the targeted product usage based on manufacturer classification based on PRICAT standard
         example: 110
       labelling:
         $ref: '#/definitions/Labelling'
@@ -379,6 +438,10 @@ definitions:
         type: string
         description: C1 / C2 / C3 tyre
         example: C1
+      supplierId:
+        type: string
+        description: (Private) Supplier Number or Vendor Number assigned to a tyre manufacturer by the OEM to identify the company (alphanumeric field)
+        example: A1B2C3D4
       urls:
         type: array
         items:
@@ -394,7 +457,7 @@ definitions:
             url:
               type: string
               description: URL of the website
-              example: http://www.michelin.com
+              example: http://www.gdso.org
   ApiResponse:
     properties:
       code:
