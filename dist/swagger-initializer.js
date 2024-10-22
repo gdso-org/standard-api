@@ -5,7 +5,8 @@ window.onload = function() {
   window.ui = SwaggerUIBundle({
     urls: [
       {url: "gdso_standard_api_v2.1.0.yaml", name: "API v2.1.0"},
-      {url: "gdso_standard_api_v1.1.0.yaml", name: "API v1.1.0"}
+      {url: "gdso_standard_api_v1.1.0.yaml", name: "API v1.1.0"},
+      {url: "gdso_standard_api_v1.0.0.yaml", name: "API v1.0.0"}
 	],
     dom_id: '#swagger-ui',
     deepLinking: true,
