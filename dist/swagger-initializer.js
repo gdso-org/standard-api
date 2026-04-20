@@ -6,7 +6,9 @@ window.onload = function() {
     urls: [
       {url: "gdso_standard_api_v2.1.1.yaml", name: "API v2.1.1"},
       {url: "gdso_standard_api_v2.1.0.yaml", name: "API v2.1.0"},
+	  {url: "gdso_standard_api_v1.1.1.yaml", name: "API v1.1.1"},
       {url: "gdso_standard_api_v1.1.0.yaml", name: "API v1.1.0"},
+	  {url: "gdso_standard_api_v1.0.1.yaml", name: "API v1.0.1"},
       {url: "gdso_standard_api_v1.0.0.yaml", name: "API v1.0.0"}
 	],
     dom_id: '#swagger-ui',
